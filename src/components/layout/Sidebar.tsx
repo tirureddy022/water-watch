@@ -3,8 +3,10 @@ import {
   Activity,
   AlertTriangle,
   Droplet,
+  FileBarChart,
   LayoutDashboard,
   LogOut,
+  Map,
   ShieldCheck,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
@@ -21,6 +23,8 @@ const ITEMS: readonly Item[] = [
   { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
   { label: "Status", to: "/status", icon: Activity },
   { label: "Alerts", to: "/alerts", icon: AlertTriangle },
+  { label: "Reports", to: "/reports", icon: FileBarChart, matchPrefix: true },
+  { label: "Maps", to: "/maps", icon: Map },
   { label: "Admin", to: "/admin", icon: ShieldCheck, adminOnly: true, matchPrefix: true },
 ];
 

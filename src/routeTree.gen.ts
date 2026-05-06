@@ -14,10 +14,16 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppStatusRouteImport } from './routes/_app/status'
+import { Route as AppReportsRouteImport } from './routes/_app/reports'
+import { Route as AppMapsRouteImport } from './routes/_app/maps'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppAlertsRouteImport } from './routes/_app/alerts'
 import { Route as AppAdminRouteImport } from './routes/_app/admin'
+import { Route as AppReportsIndexRouteImport } from './routes/_app/reports.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app/admin.index'
+import { Route as AppReportsWaterMonitorRouteImport } from './routes/_app/reports.water-monitor'
+import { Route as AppReportsSummaryRouteImport } from './routes/_app/reports.summary'
+import { Route as AppReportsPowerUtilizationRouteImport } from './routes/_app/reports.power-utilization'
 import { Route as AppAdminTechnicianRouteImport } from './routes/_app/admin.technician'
 import { Route as AppAdminStateRouteImport } from './routes/_app/admin.state'
 import { Route as AppAdminSignupRouteImport } from './routes/_app/admin.signup'
@@ -48,6 +54,16 @@ const AppStatusRoute = AppStatusRouteImport.update({
   path: '/status',
   getParentRoute: () => AppRoute,
 } as any)
+const AppReportsRoute = AppReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMapsRoute = AppMapsRouteImport.update({
+  id: '/maps',
+  path: '/maps',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -63,11 +79,32 @@ const AppAdminRoute = AppAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AppRoute,
 } as any)
+const AppReportsIndexRoute = AppReportsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppReportsRoute,
+} as any)
 const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppAdminRoute,
 } as any)
+const AppReportsWaterMonitorRoute = AppReportsWaterMonitorRouteImport.update({
+  id: '/water-monitor',
+  path: '/water-monitor',
+  getParentRoute: () => AppReportsRoute,
+} as any)
+const AppReportsSummaryRoute = AppReportsSummaryRouteImport.update({
+  id: '/summary',
+  path: '/summary',
+  getParentRoute: () => AppReportsRoute,
+} as any)
+const AppReportsPowerUtilizationRoute =
+  AppReportsPowerUtilizationRouteImport.update({
+    id: '/power-utilization',
+    path: '/power-utilization',
+    getParentRoute: () => AppReportsRoute,
+  } as any)
 const AppAdminTechnicianRoute = AppAdminTechnicianRouteImport.update({
   id: '/technician',
   path: '/technician',
@@ -101,13 +138,19 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AppAdminRouteWithChildren
   '/alerts': typeof AppAlertsRoute
   '/dashboard': typeof AppDashboardRoute
+  '/maps': typeof AppMapsRoute
+  '/reports': typeof AppReportsRouteWithChildren
   '/status': typeof AppStatusRoute
   '/admin/device': typeof AppAdminDeviceRoute
   '/admin/district': typeof AppAdminDistrictRoute
   '/admin/signup': typeof AppAdminSignupRoute
   '/admin/state': typeof AppAdminStateRoute
   '/admin/technician': typeof AppAdminTechnicianRoute
+  '/reports/power-utilization': typeof AppReportsPowerUtilizationRoute
+  '/reports/summary': typeof AppReportsSummaryRoute
+  '/reports/water-monitor': typeof AppReportsWaterMonitorRoute
   '/admin/': typeof AppAdminIndexRoute
+  '/reports/': typeof AppReportsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -115,13 +158,18 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/alerts': typeof AppAlertsRoute
   '/dashboard': typeof AppDashboardRoute
+  '/maps': typeof AppMapsRoute
   '/status': typeof AppStatusRoute
   '/admin/device': typeof AppAdminDeviceRoute
   '/admin/district': typeof AppAdminDistrictRoute
   '/admin/signup': typeof AppAdminSignupRoute
   '/admin/state': typeof AppAdminStateRoute
   '/admin/technician': typeof AppAdminTechnicianRoute
+  '/reports/power-utilization': typeof AppReportsPowerUtilizationRoute
+  '/reports/summary': typeof AppReportsSummaryRoute
+  '/reports/water-monitor': typeof AppReportsWaterMonitorRoute
   '/admin': typeof AppAdminIndexRoute
+  '/reports': typeof AppReportsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -132,13 +180,19 @@ export interface FileRoutesById {
   '/_app/admin': typeof AppAdminRouteWithChildren
   '/_app/alerts': typeof AppAlertsRoute
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/maps': typeof AppMapsRoute
+  '/_app/reports': typeof AppReportsRouteWithChildren
   '/_app/status': typeof AppStatusRoute
   '/_app/admin/device': typeof AppAdminDeviceRoute
   '/_app/admin/district': typeof AppAdminDistrictRoute
   '/_app/admin/signup': typeof AppAdminSignupRoute
   '/_app/admin/state': typeof AppAdminStateRoute
   '/_app/admin/technician': typeof AppAdminTechnicianRoute
+  '/_app/reports/power-utilization': typeof AppReportsPowerUtilizationRoute
+  '/_app/reports/summary': typeof AppReportsSummaryRoute
+  '/_app/reports/water-monitor': typeof AppReportsWaterMonitorRoute
   '/_app/admin/': typeof AppAdminIndexRoute
+  '/_app/reports/': typeof AppReportsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -149,13 +203,19 @@ export interface FileRouteTypes {
     | '/admin'
     | '/alerts'
     | '/dashboard'
+    | '/maps'
+    | '/reports'
     | '/status'
     | '/admin/device'
     | '/admin/district'
     | '/admin/signup'
     | '/admin/state'
     | '/admin/technician'
+    | '/reports/power-utilization'
+    | '/reports/summary'
+    | '/reports/water-monitor'
     | '/admin/'
+    | '/reports/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -163,13 +223,18 @@ export interface FileRouteTypes {
     | '/signup'
     | '/alerts'
     | '/dashboard'
+    | '/maps'
     | '/status'
     | '/admin/device'
     | '/admin/district'
     | '/admin/signup'
     | '/admin/state'
     | '/admin/technician'
+    | '/reports/power-utilization'
+    | '/reports/summary'
+    | '/reports/water-monitor'
     | '/admin'
+    | '/reports'
   id:
     | '__root__'
     | '/'
@@ -179,13 +244,19 @@ export interface FileRouteTypes {
     | '/_app/admin'
     | '/_app/alerts'
     | '/_app/dashboard'
+    | '/_app/maps'
+    | '/_app/reports'
     | '/_app/status'
     | '/_app/admin/device'
     | '/_app/admin/district'
     | '/_app/admin/signup'
     | '/_app/admin/state'
     | '/_app/admin/technician'
+    | '/_app/reports/power-utilization'
+    | '/_app/reports/summary'
+    | '/_app/reports/water-monitor'
     | '/_app/admin/'
+    | '/_app/reports/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -232,6 +303,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppStatusRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/reports': {
+      id: '/_app/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AppReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/maps': {
+      id: '/_app/maps'
+      path: '/maps'
+      fullPath: '/maps'
+      preLoaderRoute: typeof AppMapsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
@@ -253,12 +338,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/reports/': {
+      id: '/_app/reports/'
+      path: '/'
+      fullPath: '/reports/'
+      preLoaderRoute: typeof AppReportsIndexRouteImport
+      parentRoute: typeof AppReportsRoute
+    }
     '/_app/admin/': {
       id: '/_app/admin/'
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AppAdminIndexRouteImport
       parentRoute: typeof AppAdminRoute
+    }
+    '/_app/reports/water-monitor': {
+      id: '/_app/reports/water-monitor'
+      path: '/water-monitor'
+      fullPath: '/reports/water-monitor'
+      preLoaderRoute: typeof AppReportsWaterMonitorRouteImport
+      parentRoute: typeof AppReportsRoute
+    }
+    '/_app/reports/summary': {
+      id: '/_app/reports/summary'
+      path: '/summary'
+      fullPath: '/reports/summary'
+      preLoaderRoute: typeof AppReportsSummaryRouteImport
+      parentRoute: typeof AppReportsRoute
+    }
+    '/_app/reports/power-utilization': {
+      id: '/_app/reports/power-utilization'
+      path: '/power-utilization'
+      fullPath: '/reports/power-utilization'
+      preLoaderRoute: typeof AppReportsPowerUtilizationRouteImport
+      parentRoute: typeof AppReportsRoute
     }
     '/_app/admin/technician': {
       id: '/_app/admin/technician'
@@ -320,10 +433,30 @@ const AppAdminRouteWithChildren = AppAdminRoute._addFileChildren(
   AppAdminRouteChildren,
 )
 
+interface AppReportsRouteChildren {
+  AppReportsPowerUtilizationRoute: typeof AppReportsPowerUtilizationRoute
+  AppReportsSummaryRoute: typeof AppReportsSummaryRoute
+  AppReportsWaterMonitorRoute: typeof AppReportsWaterMonitorRoute
+  AppReportsIndexRoute: typeof AppReportsIndexRoute
+}
+
+const AppReportsRouteChildren: AppReportsRouteChildren = {
+  AppReportsPowerUtilizationRoute: AppReportsPowerUtilizationRoute,
+  AppReportsSummaryRoute: AppReportsSummaryRoute,
+  AppReportsWaterMonitorRoute: AppReportsWaterMonitorRoute,
+  AppReportsIndexRoute: AppReportsIndexRoute,
+}
+
+const AppReportsRouteWithChildren = AppReportsRoute._addFileChildren(
+  AppReportsRouteChildren,
+)
+
 interface AppRouteChildren {
   AppAdminRoute: typeof AppAdminRouteWithChildren
   AppAlertsRoute: typeof AppAlertsRoute
   AppDashboardRoute: typeof AppDashboardRoute
+  AppMapsRoute: typeof AppMapsRoute
+  AppReportsRoute: typeof AppReportsRouteWithChildren
   AppStatusRoute: typeof AppStatusRoute
 }
 
@@ -331,6 +464,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminRoute: AppAdminRouteWithChildren,
   AppAlertsRoute: AppAlertsRoute,
   AppDashboardRoute: AppDashboardRoute,
+  AppMapsRoute: AppMapsRoute,
+  AppReportsRoute: AppReportsRouteWithChildren,
   AppStatusRoute: AppStatusRoute,
 }
 

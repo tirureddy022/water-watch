@@ -222,14 +222,6 @@ function PieCard({
               />
             </PieChart>
           </ResponsiveContainer>
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-            <span className="font-mono text-2xl font-medium tabular-nums text-steel-900">
-              {pct}%
-            </span>
-            <span className="font-mono text-[9px] uppercase tracking-widest text-steel-500">
-              {onLabel}
-            </span>
-          </div>
         </div>
         <div className="flex flex-col gap-3 text-xs">
           <Legend color={onColor} label={onLabel} value={on} />

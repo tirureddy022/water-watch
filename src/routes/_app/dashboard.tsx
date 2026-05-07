@@ -284,29 +284,30 @@ function Th({ children, className = "" }: { children: React.ReactNode; className
   return <th className={`px-6 py-3 ${className}`}>{children}</th>;
 }
 
-function Row({
-  id,
-  flow,
-  pressure,
-  turbidity,
-  time,
-  alert,
-}: {
-  id: string;
-  flow: string;
-  pressure: string;
-  turbidity: string;
-  time: string;
-  alert?: boolean;
-}) {
-  const cls = alert ? "bg-destructive/5 text-destructive" : "text-steel-700";
+function StatusPill({ on, label }: { on: boolean; label: string }) {
   return (
-    <tr className={`transition-colors hover:bg-steel-50/80 ${alert ? "bg-destructive/5" : ""}`}>
-      <td className={`px-6 py-4 font-semibold ${alert ? "text-destructive" : "text-steel-900"}`}>{id}</td>
-      <td className={`px-6 py-4 ${cls}`}>{flow}</td>
-      <td className={`px-6 py-4 ${cls}`}>{pressure}</td>
-      <td className={`px-6 py-4 ${cls}`}>{turbidity}</td>
-      <td className={`px-6 py-4 text-right ${alert ? "text-destructive" : "text-steel-500"}`}>{time}</td>
+    <span
+      className={
+        "inline-flex items-center gap-1.5 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest " +
+        (on
+          ? "bg-[color:var(--success)]/15 text-[color:var(--success)]"
+          : "bg-destructive/10 text-destructive")
+      }
+    >
+      <span className={"size-1.5 rounded-full " + (on ? "bg-[color:var(--success)]" : "bg-destructive")} />
+      {label} {on ? "ON" : "OFF"}
+    </span>
+  );
+}
+
+function SchemaRow({ device }: { device: (typeof DEVICES)[number] }) {
+  return (
+    <tr className="transition-colors hover:bg-steel-50/80">
+      <td className="px-6 py-4 font-semibold text-steel-900">{device.id}</td>
+      <td className="px-6 py-4 text-steel-700">{device.state}</td>
+      <td className="px-6 py-4 text-steel-700">{device.district}</td>
+      <td className="px-6 py-4"><StatusPill on={device.powerOn} label="Power" /></td>
+      <td className="px-6 py-4 text-right"><StatusPill on={device.motorOn} label="Motor" /></td>
     </tr>
   );
 }

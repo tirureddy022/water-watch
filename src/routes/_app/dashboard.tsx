@@ -144,18 +144,17 @@ function DashboardPage() {
           <table className="w-full text-left">
             <thead className="bg-steel-50">
               <tr className="border-b border-steel-200 text-[10px] font-bold uppercase tracking-widest text-steel-500">
-                <Th>Node ID</Th>
-                <Th>Flow rate</Th>
-                <Th>Pressure</Th>
-                <Th>Turbidity</Th>
-                <Th className="text-right">Last check</Th>
+                <Th>Schema Name</Th>
+                <Th>State</Th>
+                <Th>District</Th>
+                <Th>Power Status</Th>
+                <Th className="text-right">Motor Status</Th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-steel-100 font-mono text-sm tabular-nums">
-              <Row id="SCH-0421-B" flow="412.8 L/m" pressure="64.2 PSI" turbidity="0.08 NTU" time="08:44:12" />
-              <Row id="SCH-0422-C" flow="389.1 L/m" pressure="61.8 PSI" turbidity="0.09 NTU" time="08:44:09" />
-              <Row id="SCH-0104-A" flow="000.0 L/m" pressure="04.1 PSI" turbidity="--.- NTU" time="08:43:55" alert />
-              <Row id="SCH-0423-D" flow="445.6 L/m" pressure="68.0 PSI" turbidity="0.11 NTU" time="08:43:32" />
+            <tbody className="divide-y divide-steel-100 font-mono text-sm">
+              {DEVICES.slice(0, 10).map((d) => (
+                <SchemaRow key={d.id} device={d} />
+              ))}
             </tbody>
           </table>
         </div>

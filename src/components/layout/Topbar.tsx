@@ -1,4 +1,6 @@
+import { Moon, Sun } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { useTheme } from "@/lib/theme";
 
 export function Topbar({ subtitle }: { subtitle?: string }) {
   const { user } = useAuth();

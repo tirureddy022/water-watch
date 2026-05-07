@@ -182,7 +182,6 @@ function PieCard({
   offColor: string;
 }) {
   const total = on + off;
-  const pct = total ? Math.round((on / total) * 100) : 0;
   const data = [
     { name: onLabel, value: on, color: onColor },
     { name: offLabel, value: off, color: offColor },

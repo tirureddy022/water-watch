@@ -144,18 +144,17 @@ function DashboardPage() {
           <table className="w-full text-left">
             <thead className="bg-steel-50">
               <tr className="border-b border-steel-200 text-[10px] font-bold uppercase tracking-widest text-steel-500">
-                <Th>Node ID</Th>
-                <Th>Flow rate</Th>
-                <Th>Pressure</Th>
-                <Th>Turbidity</Th>
-                <Th className="text-right">Last check</Th>
+                <Th>Schema Name</Th>
+                <Th>State</Th>
+                <Th>District</Th>
+                <Th>Power Status</Th>
+                <Th className="text-right">Motor Status</Th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-steel-100 font-mono text-sm tabular-nums">
-              <Row id="SCH-0421-B" flow="412.8 L/m" pressure="64.2 PSI" turbidity="0.08 NTU" time="08:44:12" />
-              <Row id="SCH-0422-C" flow="389.1 L/m" pressure="61.8 PSI" turbidity="0.09 NTU" time="08:44:09" />
-              <Row id="SCH-0104-A" flow="000.0 L/m" pressure="04.1 PSI" turbidity="--.- NTU" time="08:43:55" alert />
-              <Row id="SCH-0423-D" flow="445.6 L/m" pressure="68.0 PSI" turbidity="0.11 NTU" time="08:43:32" />
+            <tbody className="divide-y divide-steel-100 font-mono text-sm">
+              {DEVICES.slice(0, 10).map((d) => (
+                <SchemaRow key={d.id} device={d} />
+              ))}
             </tbody>
           </table>
         </div>
@@ -182,7 +181,6 @@ function PieCard({
   offColor: string;
 }) {
   const total = on + off;
-  const pct = total ? Math.round((on / total) * 100) : 0;
   const data = [
     { name: onLabel, value: on, color: onColor },
     { name: offLabel, value: off, color: offColor },
@@ -222,14 +220,6 @@ function PieCard({
               />
             </PieChart>
           </ResponsiveContainer>
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-            <span className="font-mono text-2xl font-medium tabular-nums text-steel-900">
-              {pct}%
-            </span>
-            <span className="font-mono text-[9px] uppercase tracking-widest text-steel-500">
-              {onLabel}
-            </span>
-          </div>
         </div>
         <div className="flex flex-col gap-3 text-xs">
           <Legend color={onColor} label={onLabel} value={on} />
@@ -294,29 +284,30 @@ function Th({ children, className = "" }: { children: React.ReactNode; className
   return <th className={`px-6 py-3 ${className}`}>{children}</th>;
 }
 
-function Row({
-  id,
-  flow,
-  pressure,
-  turbidity,
-  time,
-  alert,
-}: {
-  id: string;
-  flow: string;
-  pressure: string;
-  turbidity: string;
-  time: string;
-  alert?: boolean;
-}) {
-  const cls = alert ? "bg-destructive/5 text-destructive" : "text-steel-700";
+function StatusPill({ on, label }: { on: boolean; label: string }) {
   return (
-    <tr className={`transition-colors hover:bg-steel-50/80 ${alert ? "bg-destructive/5" : ""}`}>
-      <td className={`px-6 py-4 font-semibold ${alert ? "text-destructive" : "text-steel-900"}`}>{id}</td>
-      <td className={`px-6 py-4 ${cls}`}>{flow}</td>
-      <td className={`px-6 py-4 ${cls}`}>{pressure}</td>
-      <td className={`px-6 py-4 ${cls}`}>{turbidity}</td>
-      <td className={`px-6 py-4 text-right ${alert ? "text-destructive" : "text-steel-500"}`}>{time}</td>
+    <span
+      className={
+        "inline-flex items-center gap-1.5 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest " +
+        (on
+          ? "bg-[color:var(--success)]/15 text-[color:var(--success)]"
+          : "bg-destructive/10 text-destructive")
+      }
+    >
+      <span className={"size-1.5 rounded-full " + (on ? "bg-[color:var(--success)]" : "bg-destructive")} />
+      {label} {on ? "ON" : "OFF"}
+    </span>
+  );
+}
+
+function SchemaRow({ device }: { device: (typeof DEVICES)[number] }) {
+  return (
+    <tr className="transition-colors hover:bg-steel-50/80">
+      <td className="px-6 py-4 font-semibold text-steel-900">{device.id}</td>
+      <td className="px-6 py-4 text-steel-700">{device.state}</td>
+      <td className="px-6 py-4 text-steel-700">{device.district}</td>
+      <td className="px-6 py-4"><StatusPill on={device.powerOn} label="Power" /></td>
+      <td className="px-6 py-4 text-right"><StatusPill on={device.motorOn} label="Motor" /></td>
     </tr>
   );
 }

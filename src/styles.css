@@ -98,16 +98,16 @@
 }
 
 .dark {
-  /* Invert steel scale so light surfaces become dark in dark mode.
-     Sidebar (bg-steel-900) stays dark by design. */
+  /* Flip light surface tokens for dark mode. Keep steel-700/800/900 dark
+     so the sidebar (bg-steel-900) stays dark in both themes. */
   --steel-50: oklch(0.18 0.03 260);
   --steel-100: oklch(0.22 0.035 260);
   --steel-200: oklch(0.28 0.04 260);
   --steel-300: oklch(0.36 0.04 258);
-  --steel-500: oklch(0.62 0.04 257);
-  --steel-700: oklch(0.82 0.02 256);
-  --steel-800: oklch(0.9 0.015 255);
-  --steel-900: oklch(0.97 0.01 255);
+  --steel-500: oklch(0.7 0.03 256);
+  --steel-700: oklch(0.32 0.04 258);
+  --steel-800: oklch(0.22 0.04 260);
+  --steel-900: oklch(0.16 0.04 262);
 
   --background: oklch(0.16 0.03 260);
   --foreground: oklch(0.97 0.01 255);

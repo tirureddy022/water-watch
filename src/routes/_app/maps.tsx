@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { lazy, Suspense } from "react";
 import { AppShell } from "@/components/layout/AppShell";
-import { LeafletMap } from "@/components/maps/LeafletMap";
+const LeafletMap = lazy(() =>
+  import("@/components/maps/LeafletMap").then((m) => ({ default: m.LeafletMap })),
+);
 import {
   DEVICES,
   filterDevices,
@@ -83,7 +86,11 @@ function MapsPage() {
             {FILTERS.find((f) => f.key === active)?.label} — {visible.length} devices
           </h3>
         </div>
-        <LeafletMap devices={visible} />
+        {typeof window !== "undefined" && (
+          <Suspense fallback={<div className="h-[60vh] w-full bg-steel-100" />}>
+            <LeafletMap devices={visible} />
+          </Suspense>
+        )}
       </div>
     </AppShell>
   );

@@ -170,3 +170,28 @@
     box-shadow: inset 0 1px 0 0 oklch(1 0 0 / 0.6);
   }
 }
+
+/*
+ * Dark-mode readability overrides.
+ * Many components hard-code text-steel-900/800/700 and bg-white for the
+ * light theme. In dark mode those collapse to near-invisible dark-on-dark.
+ * Force readable foreground/surface tokens whenever those utilities appear
+ * inside a .dark subtree, without touching the sidebar (which uses
+ * bg-steel-900 as a SURFACE, not text).
+ */
+.dark .text-steel-900,
+.dark .text-steel-800,
+.dark .text-steel-700 {
+  color: var(--color-foreground) !important;
+}
+
+.dark .bg-white {
+  background-color: var(--color-card) !important;
+}
+
+.dark .data-grid {
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--color-foreground) 12%, transparent) 1px,
+    transparent 1px
+  );
+}
